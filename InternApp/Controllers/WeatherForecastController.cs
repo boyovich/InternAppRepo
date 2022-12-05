@@ -33,7 +33,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("num")]
     public int[] Func()
     {
-        int[] p = { 1, 2, 3, 4, 5 };
+        int[] p = { 1, 2, 3, 4, 5, 6};
         return p;
     }
 }
