@@ -16,5 +16,7 @@ namespace InternApp.Domain.Entities
         public DateTime DOB { get; set; }
         public Position position { get; set; }
         public string PhoneNumber { get; set; }
+
+
     }
 }
