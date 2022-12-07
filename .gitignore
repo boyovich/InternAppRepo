@@ -12,7 +12,7 @@
 *.cache
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+.wsuo
 # Mono auto generated files
 mono_crash.*
 
