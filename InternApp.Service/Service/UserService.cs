@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InternApp.Service.Service
 {
-    internal class UserService
+    public class UserService : IUserService
     {
     }
 }

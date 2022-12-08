@@ -10,9 +10,8 @@ namespace InternApp.Domain.Persistance
 
         }
 
-        DbSet<User> users { get; set; }
-
-        DbSet<Company> companies { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
 
     }
