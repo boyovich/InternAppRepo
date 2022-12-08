@@ -45,7 +45,12 @@ namespace InternApp.Service.Service
 
         public Company UpdateCompany(string id, UpdateCompanyDTO companyDTO)
         {
-            throw new NotImplementedException();
+            Company company = _context.Companies.Single(c => c.Id == id);
+            company.Name = companyDTO.Name;
+            company.City = companyDTO.City;
+            company.Country = companyDTO.Country;
+            _context.SaveChanges();
+            return company;
         }
     }
 }
