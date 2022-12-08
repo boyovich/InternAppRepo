@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternApp.Domain.Migrations
 {
     [DbContext(typeof(InternDbContext))]
-    [Migration("20221207093534_InitialCreate")]
+    [Migration("20221208090433_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace InternApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("companies");
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("InternApp.Domain.Entities.User", b =>
@@ -82,7 +82,7 @@ namespace InternApp.Domain.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("InternApp.Domain.Entities.User", b =>

@@ -41,7 +41,7 @@ namespace InternApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("companies");
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("InternApp.Domain.Entities.User", b =>
@@ -79,7 +79,7 @@ namespace InternApp.Domain.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("InternApp.Domain.Entities.User", b =>
