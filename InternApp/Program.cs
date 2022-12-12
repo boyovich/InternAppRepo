@@ -1,7 +1,7 @@
 using InternApp.Domain.Persistance;
 using InternApp.Service.Service;
 using Microsoft.EntityFrameworkCore;
-
+using AutoMapper;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +15,9 @@ builder.Services.AddDbContext<InternDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection"), b => b.MigrationsAssembly("InternApp.Domain"));
 });
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

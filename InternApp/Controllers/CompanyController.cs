@@ -1,4 +1,5 @@
-﻿using InternApp.Domain.DTOs;
+﻿using AutoMapper;
+using InternApp.Domain.DTOs;
 using InternApp.Domain.Entities;
 using InternApp.Service.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace InternApp.API.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
+        private readonly IMapper _mapper;
 
-        public CompanyController(ICompanyService companyService)
+        public CompanyController(ICompanyService companyService, IMapper mapper)
         {
             _companyService = companyService ?? throw new ArgumentNullException(nameof(companyService));
+            _mapper = mapper;
         }
         /*public IEnumerable<Company> GetAllCompanies();
         public Company CreateCompany(CreateCompanyDTO companyDTO);
@@ -28,7 +31,7 @@ namespace InternApp.API.Controllers
         [HttpPost]
         public ActionResult<Company> CreateCompany([FromBody] CreateCompanyDTO companyDTO)
         {
-            var company = _companyService.CreateCompany(companyDTO);
+            var company = _companyService.CreateCompany(_mapper.Map<Company>(companyDTO));
             return Ok(company);
         }
         [HttpPut]

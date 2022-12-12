@@ -11,7 +11,7 @@ namespace InternApp.Service.Service
     {
         public IEnumerable<User> GetAllUsers();
         public IEnumerable<User> GetAllUsersByCompanyId(string companyId);
-        public User CreateUser(CreateUserDTO createUserDTO);
+        public User CreateUser(User user);
         public User UpdateUser(string id, UpdateUserDTO updateUserDTO);
         public void DeleteUser(string id);
     }

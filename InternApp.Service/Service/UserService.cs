@@ -13,22 +13,14 @@ namespace InternApp.Service.Service
     public class UserService : IUserService
     {
         private InternDbContext _context;
-        private Random random = new Random();
         public UserService(InternDbContext context)
         {
             _context = context;
         }
         
-        public User CreateUser(CreateUserDTO createUserDTO)
+        public User CreateUser(User user)
         {
-            var user = new User();
-            user.FirstName= createUserDTO.FirstName;
-            user.LastName= createUserDTO.LastName;
-            user.PhoneNumber= createUserDTO.PhoneNumber;
-            user.CompanyName= createUserDTO.CompanyName;
-
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            user.Id = new string(Enumerable.Repeat(chars, 20).Select(s => s[random.Next(chars.Length)]).ToArray());
+            user.Id = Guid.NewGuid();
             _context.Users.Add(user);
             _context.SaveChanges();
             return user;
@@ -36,7 +28,7 @@ namespace InternApp.Service.Service
 
         public void DeleteUser(string id)
         {
-            _context.Remove(_context.Users.SingleOrDefault(x => x.Id == id));
+            _context.Remove(_context.Users.SingleOrDefault(x => x.Id.ToString() == id));
             _context.SaveChanges();
         }
 
@@ -47,12 +39,12 @@ namespace InternApp.Service.Service
 
         public IEnumerable<User> GetAllUsersByCompanyId(string companyId)
         {
-            return _context.Users.Where(u => u.CompanyId == companyId);
+            return _context.Users.Where(u => u.CompanyId.ToString() == companyId);
         }
 
         public User UpdateUser(string id, UpdateUserDTO updateUserDTO)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Id == id);
+            var user = _context.Users.SingleOrDefault(u => u.Id.ToString() == id);
         /*public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CompanyName { get; set; }
@@ -63,8 +55,8 @@ namespace InternApp.Service.Service
             user.FirstName = updateUserDTO.FirstName;
             user.LastName = updateUserDTO.LastName;
             user.CompanyName = updateUserDTO.CompanyName;
-            user.DOB= updateUserDTO.DOB;
-            user.position = updateUserDTO.position;
+            user.DateOfBirth= updateUserDTO.DateOfBirth;
+            user.Position = updateUserDTO.Position;
             user.PhoneNumber = updateUserDTO.PhoneNumber;
             _context.SaveChanges();
             return user;

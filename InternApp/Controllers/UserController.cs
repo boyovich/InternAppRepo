@@ -19,7 +19,7 @@ namespace InternApp.API.Controllers
         public User CreateUser(CreateUserDTO createUserDTO);
         public User UpdateUser(string id, UpdateUserDTO updateUserDTO);
         public void DeleteUser(string id);*/
-        [HttpGet]
+        [HttpGet("getAllUsers")]
         public ActionResult<IEnumerable<User>> GetAllUsers()
         {
             return Ok(_userService.GetAllUsers());
@@ -29,19 +29,19 @@ namespace InternApp.API.Controllers
         {
             return Ok(_userService.GetAllUsersByCompanyId(companyId));
         }
-        [HttpPost]
+        [HttpPost("createUser")]
         public ActionResult<User> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
             var user = _userService.CreateUser(createUserDTO);
             return Ok(user);
         }
-        [HttpPut]
-        public ActionResult<User> UpdateUser(string id,[FromBody] UpdateUserDTO updateUserDTO)
+        [HttpPut("updateUser/{id}")]
+        public ActionResult<User> UpdateUser([FromRoute] string id,[FromBody] UpdateUserDTO updateUserDTO)
         {
             var user = _userService.UpdateUser(id, updateUserDTO);
             return Ok(user);
         }
-        [HttpDelete]
+        [HttpDelete("deleteUser/{id}")]
         public IActionResult DeleteUser(string id)
         {
             _userService.DeleteUser(id);
