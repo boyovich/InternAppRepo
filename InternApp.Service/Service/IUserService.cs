@@ -12,7 +12,7 @@ namespace InternApp.Service.Service
         public IEnumerable<User> GetAllUsers();
         public IEnumerable<User> GetAllUsersByCompanyId(string companyId);
         public User CreateUser(User user);
-        public User UpdateUser(string id, UpdateUserDTO updateUserDTO);
+        public User UpdateUser(string id, User user);
         public void DeleteUser(string id);
     }
 }

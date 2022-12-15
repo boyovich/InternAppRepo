@@ -7,7 +7,7 @@ namespace InternApp.Service.Service
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CompanyName { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
         public Position Position { get; set; }
         public string PhoneNumber { get; set; }
     }

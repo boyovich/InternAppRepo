@@ -29,12 +29,13 @@ namespace InternApp.API.Controllers
             return Ok(companies);
         }
         [HttpPost]
+        [ProducesResponseType(typeof(Company), StatusCodes.Status201Created)]
         public ActionResult<Company> CreateCompany([FromBody] CreateCompanyDTO companyDTO)
         {
             var company = _companyService.CreateCompany(_mapper.Map<Company>(companyDTO));
-            return Ok(company);
+            return CreatedAtRoute("CreateCompany", company);
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public ActionResult<Company> UpdateCompany(string id, [FromBody] UpdateCompanyDTO companyDTO)
         {
             var company = _companyService.UpdateCompany(id, companyDTO);
