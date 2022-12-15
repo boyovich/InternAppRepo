@@ -1,14 +1,5 @@
-﻿using InternApp.Domain;
-using InternApp.Domain.Entities;
+﻿using InternApp.Domain.Entities;
 using InternApp.Domain.Persistance;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace InternApp.Service.Service
 {

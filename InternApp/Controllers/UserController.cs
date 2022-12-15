@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using InternApp.Domain;
 using InternApp.Service.Service;
 using Microsoft.AspNetCore.Mvc;
 /*public IEnumerable<User> GetAllUsers();
