@@ -16,6 +16,7 @@ namespace InternApp.Service.Service
         {
             return _context.Companies.OrderBy(c => c.Name).ToList();
         }
+
         public Company CreateCompany(Company company)
         {
             company.Id = Guid.NewGuid();
@@ -23,15 +24,16 @@ namespace InternApp.Service.Service
             _context.SaveChanges();
             return company;
         }
-        public void DeleteCompany(string id)
+
+        public void DeleteCompany(Guid id)
         {
-            _context.Remove(_context.Companies.Single(s => s.Id.ToString() == id));
+            _context.Remove(_context.Companies.Single(s => s.Id.ToString() == id.ToString()));
             _context.SaveChanges();
         }
 
-        public Company UpdateCompany(string id, UpdateCompanyDTO companyDTO)
+        public Company UpdateCompany(Guid id, UpdateCompanyDTO companyDTO)
         {
-            Company company = _context.Companies.Single(c => c.Id.ToString() == id);
+            Company company = _context.Companies.Single(c => c.Id.ToString() == id.ToString());
             company.Name = companyDTO.Name;
             company.City = companyDTO.City;
             company.Country = companyDTO.Country;

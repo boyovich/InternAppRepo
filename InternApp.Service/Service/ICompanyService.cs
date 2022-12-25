@@ -7,7 +7,7 @@ namespace InternApp.Service.Service
     {
         public IEnumerable<Company> GetAllCompanies();
         public Company CreateCompany(Company company);
-        public Company UpdateCompany(string id, UpdateCompanyDTO companyDTO);
-        public void DeleteCompany(string id); 
+        public Company UpdateCompany(Guid id, UpdateCompanyDTO companyDTO);
+        public void DeleteCompany(Guid id); 
     }
 }

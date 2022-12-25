@@ -2,9 +2,6 @@ using InternApp.API;
 using InternApp.Domain.Persistance;
 using InternApp.Service.Service;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.IdentityModel.Tokens;
-using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

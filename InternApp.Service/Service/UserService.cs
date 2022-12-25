@@ -25,10 +25,10 @@ namespace InternApp.Service.Service
             _context.SaveChanges();
             return user;
         }
-        //mozda dodati povratnu vrednost User? umesto void, u slucaju da ne nadjemo User po Id vratili bismo null; response NotFound()
-        public void DeleteUser(string id)
+
+        public void DeleteUser(Guid id)
         {
-            _context.Remove(_context.Users.SingleOrDefault(x => x.Id.ToString() == id));
+            _context.Remove(_context.Users.SingleOrDefault(x => x.Id.ToString() == id.ToString()));
             _context.SaveChanges();
         }
 
@@ -37,14 +37,14 @@ namespace InternApp.Service.Service
             return _context.Users.OrderBy(c => c.CompanyName).ToList();
         }
 
-        public IEnumerable<User> GetAllUsersByCompanyId(string companyId)
+        public IEnumerable<User> GetAllUsersByCompanyId(Guid companyId)
         {
-            return _context.Users.Where(u => u.CompanyId.ToString() == companyId);
+            return _context.Users.Where(u => u.CompanyId.ToString() == companyId.ToString());
         }
 
-        public User UpdateUser(string id, User user)
+        public User UpdateUser(Guid id, User user)
         {
-            User? currentUser = _context.Users.Single(u => u.Id.ToString() == id);
+            User? currentUser = _context.Users.Single(u => u.Id.ToString() == id.ToString());
             if(currentUser == null)
             {
                 return user;
@@ -60,15 +60,7 @@ namespace InternApp.Service.Service
             {
                 return user;
             }
-            currentUser.CompanyId = company.Id;
-        /*public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string CompanyName { get; set; }
-        public DateTime DOB { get; set; }
-        public Position position { get; set; }
-        public string PhoneNumber { get; set; }
-        */
-            
+            currentUser.CompanyId = company.Id;          
             _context.SaveChanges();
             return user;
         }

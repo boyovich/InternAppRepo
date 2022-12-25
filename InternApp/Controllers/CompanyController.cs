@@ -18,16 +18,14 @@ namespace InternApp.API.Controllers
             _companyService = companyService ?? throw new ArgumentNullException(nameof(companyService));
             _mapper = mapper;
         }
-        /*public IEnumerable<Company> GetAllCompanies();
-        public Company CreateCompany(CreateCompanyDTO companyDTO);
-        public Company UpdateCompany(string id, UpdateCompanyDTO companyDTO);
-        public void DeleteCompany(string id); */
+       
         [HttpGet]
         public ActionResult<IEnumerable<Company>> GetAllCompanies()
         {
             var companies = _companyService.GetAllCompanies();
             return Ok(companies);
         }
+
         [HttpPost]
         [ProducesResponseType(typeof(Company), StatusCodes.Status201Created)]
         public ActionResult<Company> CreateCompany([FromBody] CreateCompanyDTO companyDTO)
@@ -35,14 +33,16 @@ namespace InternApp.API.Controllers
             var company = _companyService.CreateCompany(_mapper.Map<Company>(companyDTO));
             return CreatedAtRoute("CreateCompany", company);
         }
+
         [HttpPut("{id}")]
-        public ActionResult<Company> UpdateCompany(string id, [FromBody] UpdateCompanyDTO companyDTO)
+        public ActionResult<Company> UpdateCompany(Guid id, [FromBody] UpdateCompanyDTO companyDTO)
         {
             var company = _companyService.UpdateCompany(id, companyDTO);
             return Ok(company);
         }
+
         [HttpDelete]
-        public IActionResult DeleteCompany(string id)
+        public IActionResult DeleteCompany(Guid id)
         {
             _companyService.DeleteCompany(id);
             return Ok();
