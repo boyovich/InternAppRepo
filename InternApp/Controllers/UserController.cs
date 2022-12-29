@@ -24,7 +24,7 @@ namespace InternApp.API.Controllers
         }
        
 
-        [HttpGet]
+        [HttpGet("getAll")]
         public ActionResult<IEnumerable<Domain.Entities.User>> GetAllUsers()
         {
             var users = _userService.GetAllUsers();
@@ -32,13 +32,13 @@ namespace InternApp.API.Controllers
             return Ok(users);
         }
 
-        [HttpGet("getUsersByCompany/{companyId}")]
+        [HttpGet("{companyId}")]
         public ActionResult<IEnumerable<Domain.Entities.User>> GetAllUsersByCompanyId(Guid companyId)
         {
             return Ok(_userService.GetAllUsersByCompanyId(companyId));
         }
 
-        [HttpPost("createUser")]
+        [HttpPost]
         [ProducesResponseType(typeof(Domain.Entities.User), StatusCodes.Status201Created)]
         public ActionResult<Domain.Entities.User> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
@@ -46,14 +46,14 @@ namespace InternApp.API.Controllers
             return CreatedAtAction("CreateUser", user);
         }
 
-        [HttpPut("updateUser")]
+        [HttpPut]
         public ActionResult<Domain.Entities.User> UpdateUser([FromQuery] Guid id,[FromBody] UpdateUserDTO updateUserDTO)
         {
             var user = _userService.UpdateUser(id, _mapper.Map<Domain.Entities.User>(updateUserDTO));
             return Ok(user);
         }
 
-        [HttpDelete("deleteUser/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteUser(Guid id)
         {
             _userService.DeleteUser(id);

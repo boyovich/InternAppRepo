@@ -11,11 +11,11 @@ namespace InternApp.API.Profiles
             CreateMap<User, CreateUserDTO>().ReverseMap()
                 .ForMember(x => x.Id, y => y.Ignore())
                 .ForMember(x => x.DateOfBirth, y => y.MapFrom(src =>
-                    src.DateOfBirth.ToDateTime(TimeOnly.Parse("01:00 AM"))
+                    src.DateOfBirth.ToDateTime(TimeOnly.MinValue)
                 ));
             CreateMap<User, UpdateUserDTO>().ReverseMap()
                 .ForMember(x => x.DateOfBirth, y => y.MapFrom(src =>
-                    src.DateOfBirth.ToDateTime(TimeOnly.Parse("01:00 AM"))
+                    src.DateOfBirth.ToDateTime(TimeOnly.MinValue)
                 )); 
         }
     }

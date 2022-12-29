@@ -14,7 +14,7 @@ namespace InternApp.Domain.Entities
         public string LastName { get; set; }
         [Required]
         public Guid CompanyId { get; set; }
-        public string CompanyName { get; set;}
+        public Company Company { get; set;}
         public DateTime DateOfBirth { get; set; }
         public Position Position { get; set; }
         public string PhoneNumber { get; set; }      

@@ -19,7 +19,6 @@ namespace InternApp.Service.Service
 
         public Company CreateCompany(Company company)
         {
-            company.Id = Guid.NewGuid();
             _context.Companies.Add(company);
             _context.SaveChanges();
             return company;
@@ -27,13 +26,13 @@ namespace InternApp.Service.Service
 
         public void DeleteCompany(Guid id)
         {
-            _context.Remove(_context.Companies.Single(s => s.Id.ToString() == id.ToString()));
+            _context.Remove(_context.Companies.Single(s => s.Id == id));
             _context.SaveChanges();
         }
 
         public Company UpdateCompany(Guid id, UpdateCompanyDTO companyDTO)
         {
-            Company company = _context.Companies.Single(c => c.Id.ToString() == id.ToString());
+            Company company = _context.Companies.Single(c => c.Id == id);
             company.Name = companyDTO.Name;
             company.City = companyDTO.City;
             company.Country = companyDTO.Country;
