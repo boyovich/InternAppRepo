@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using InternApp.Domain.DTOs;
 using InternApp.Service.Service;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 /*public IEnumerable<User> GetAllUsers();
        public IEnumerable<User> GetAllUsersByCompanyId(string companyId);
@@ -22,20 +24,20 @@ namespace InternApp.API.Controllers
             _mapper = mapper;
             _logger = logger;
         }
-       
 
-        [HttpGet("getAll")]
-        public ActionResult<IEnumerable<Domain.Entities.User>> GetAllUsers()
+        [HttpGet("getAllUsers")]
+        public ActionResult<IEnumerable<UserDTO>> GetAllUsers()
         {
             var users = _userService.GetAllUsers();
-            _logger.LogInformation("All users have been reached");
-            return Ok(users);
+            
+            return Ok(_mapper.Map<List<UserDTO>>(users));
         }
 
-        [HttpGet("{companyId}")]
-        public ActionResult<IEnumerable<Domain.Entities.User>> GetAllUsersByCompanyId(Guid companyId)
+        [HttpGet("getUsersByCompany/{companyId}")]
+        public ActionResult<IEnumerable<UserDTO>> GetAllUsersByCompanyId(Guid companyId)
         {
-            return Ok(_userService.GetAllUsersByCompanyId(companyId));
+            var users = _userService.GetAllUsersByCompanyId(companyId);
+            return Ok(_mapper.Map<List<UserDTO>>(users));
         }
 
         [HttpPost]

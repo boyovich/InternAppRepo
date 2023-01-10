@@ -9,6 +9,7 @@ namespace InternApp.API.Profiles
         public CompanyProfile() {
             CreateMap<CreateCompanyDTO, Company>();
             CreateMap<UpdateCompanyDTO, Company>();
+            CreateMap<Company, CompanyDTO>();
         }
     }
 }

@@ -20,10 +20,10 @@ namespace InternApp.API.Controllers
         }
        
         [HttpGet]
-        public ActionResult<IEnumerable<Company>> GetAllCompanies()
+        public ActionResult<IEnumerable<CompanyDTO>> GetAllCompanies()
         {
             var companies = _companyService.GetAllCompanies();
-            return Ok(companies);
+            return Ok(_mapper.Map<IEnumerable<CompanyDTO>>(companies));
         }
 
         [HttpPost]
