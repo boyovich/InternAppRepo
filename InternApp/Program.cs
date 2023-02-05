@@ -1,4 +1,6 @@
 using InternApp.API;
+using InternApp.API.Models;
+using InternApp.API.Services;
 using InternApp.Domain.Persistance;
 using InternApp.Service.Service;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddControllers();
+builder.Services.Configure<WeatherDatabaseSettings>(builder.Configuration.GetSection("WeatherDatabase"));
+builder.Services.AddSingleton<WeatherService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

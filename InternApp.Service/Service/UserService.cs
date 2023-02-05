@@ -18,7 +18,6 @@ namespace InternApp.Service.Service
             {
                 return user;
             }
-            user.CompanyId = company.Id;
             _context.Users.Add(user);
             company.Users.Add(user);
             _context.SaveChanges();
@@ -27,7 +26,7 @@ namespace InternApp.Service.Service
 
         public void DeleteUser(Guid id)
         {
-            _context.Remove(_context.Users.SingleOrDefault(x => x.Id == id));
+            _context.Remove(_context.Users.Single(x => x.Id == id));
             _context.SaveChanges();
         }
 
@@ -38,23 +37,22 @@ namespace InternApp.Service.Service
 
         public IEnumerable<User> GetAllUsersByCompanyId(Guid companyId)
         {
-            return _context.Users.Where(u => u.CompanyId.ToString() == companyId.ToString());
+            return _context.Users.Where(u => u.CompanyId == companyId).ToList();
         }
 
         public User UpdateUser(Guid id, User user)
         {
-            User? currentUser = _context.Users.Single(u => u.Id.ToString() == id.ToString());
+            User? currentUser = _context.Users.Single(u => u.Id == id);
             if(currentUser == null)
             {
                 return user;
             }
             currentUser.FirstName = user.FirstName;
             currentUser.LastName = user.LastName;
-            currentUser.CompanyId= user.CompanyId;
-            currentUser.PhoneNumber= user.PhoneNumber;
-            currentUser.DateOfBirth = user.DateOfBirth;
-            currentUser.Position= user.Position;
-            Company? company = _context.Companies.SingleOrDefault(c => c.Id == user.CompanyId);         
+            currentUser.CompanyId = user.CompanyId;
+            currentUser.DateOfBirth= user.DateOfBirth;
+            currentUser.Position = user.Position;
+            currentUser.PhoneNumber = user.PhoneNumber;
             _context.SaveChanges();
             return user;
         }

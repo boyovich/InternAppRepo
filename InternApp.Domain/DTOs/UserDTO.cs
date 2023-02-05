@@ -7,6 +7,7 @@
         public DateTime DateOfBirth { get; set; }
         public string CompanyName { get; set; }
         public string Position { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
 

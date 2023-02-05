@@ -26,12 +26,12 @@ namespace InternApp.API.Controllers
             return Ok(_mapper.Map<IEnumerable<CompanyDTO>>(companies));
         }
 
-        [HttpPost]
+        [HttpPost("createCompany")]
         [ProducesResponseType(typeof(Company), StatusCodes.Status201Created)]
         public ActionResult<Company> CreateCompany([FromBody] CreateCompanyDTO companyDTO)
         {
             var company = _companyService.CreateCompany(_mapper.Map<Company>(companyDTO));
-            return CreatedAtRoute("CreateCompany", company);
+            return Ok(company); 
         }
 
         [HttpPut("{id}")]
@@ -41,7 +41,7 @@ namespace InternApp.API.Controllers
             return Ok(company);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteCompany(Guid id)
         {
             _companyService.DeleteCompany(id);

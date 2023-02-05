@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace InternApp.Domain.Entities
 {
@@ -16,6 +17,7 @@ namespace InternApp.Domain.Entities
         public string LastName { get; set; }
         [Required]
         public Guid CompanyId { get; set; }
+        [JsonIgnore]
         public virtual Company Company { get; set;}
         public DateTime DateOfBirth { get; set; }
         public Position Position { get; set; }

@@ -3,11 +3,7 @@ using InternApp.Domain.DTOs;
 using InternApp.Service.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-/*public IEnumerable<User> GetAllUsers();
-       public IEnumerable<User> GetAllUsersByCompanyId(string companyId);
-       public User CreateUser(CreateUserDTO createUserDTO);
-       public User UpdateUser(string id, UpdateUserDTO updateUserDTO);
-       public void DeleteUser(string id);*/
+
 namespace InternApp.API.Controllers
 {
     [ApiController]
@@ -28,8 +24,7 @@ namespace InternApp.API.Controllers
         [HttpGet("getAllUsers")]
         public ActionResult<IEnumerable<UserDTO>> GetAllUsers()
         {
-            var users = _userService.GetAllUsers();
-            
+            var users = _userService.GetAllUsers();           
             return Ok(_mapper.Map<List<UserDTO>>(users));
         }
 
@@ -45,11 +40,11 @@ namespace InternApp.API.Controllers
         public ActionResult<Domain.Entities.User> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
             var user = _userService.CreateUser(_mapper.Map<Domain.Entities.User>(createUserDTO));
-            return CreatedAtAction("CreateUser", user);
+            return Ok(user);
         }
 
-        [HttpPut]
-        public ActionResult<Domain.Entities.User> UpdateUser([FromQuery] Guid id,[FromBody] UpdateUserDTO updateUserDTO)
+        [HttpPut("{id}")]
+        public ActionResult<Domain.Entities.User> UpdateUser([FromRoute] Guid id,[FromBody] UpdateUserDTO updateUserDTO)
         {
             var user = _userService.UpdateUser(id, _mapper.Map<Domain.Entities.User>(updateUserDTO));
             return Ok(user);

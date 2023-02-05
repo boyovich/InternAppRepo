@@ -12,5 +12,6 @@ namespace InternApp.Domain.DTOs
         public string Name { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
+        public int NumberOfUsers { get; set; }
     }
 }

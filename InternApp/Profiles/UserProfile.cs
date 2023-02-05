@@ -10,12 +10,12 @@ namespace InternApp.API.Profiles
     public class UserProfile : Profile
     {
         public UserProfile() {
-            CreateMap<User, CreateUserDTO>().ReverseMap()
+            CreateMap<CreateUserDTO,User>()
                 .ForMember(x => x.Id, y => y.Ignore())
                 .ForMember(x => x.DateOfBirth, y => y.MapFrom(src =>
                     src.DateOfBirth.ToDateTime(TimeOnly.MinValue)
                 ));
-            CreateMap<User, UpdateUserDTO>().ReverseMap()
+            CreateMap<UpdateUserDTO, User>()
                 .ForMember(x => x.DateOfBirth, y => y.MapFrom(src =>
                     src.DateOfBirth.ToDateTime(TimeOnly.MinValue)
                 ));
