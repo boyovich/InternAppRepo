@@ -7,9 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0" />
+	  <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
 
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
@@ -17,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InternApp.Domain\InternApp.Domain.csproj" />
+    <ProjectReference Include="..\InternApp.Service\InternApp.Service.csproj" />
   </ItemGroup>
 
 </Project>

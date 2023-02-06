@@ -1,22 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace InternApp.Domain.Entities
 {
     public class User
     {
-        public string Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
-        public string CompanyId { get; set; }
-        public string CompanyName { get; set;}
-        public DateTime DOB { get; set; }
-        public Position position { get; set; }
-        public string PhoneNumber { get; set; }
-
-
+        [Required]
+        public Guid CompanyId { get; set; }
+        [JsonIgnore]
+        public virtual Company Company { get; set;}
+        public DateTime DateOfBirth { get; set; }
+        public Position Position { get; set; }
+        public string PhoneNumber { get; set; }          
     }
+    
 }
