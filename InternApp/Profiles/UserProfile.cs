@@ -23,8 +23,7 @@ namespace InternApp.API.Profiles
                 .ForMember(x => x.FullName, y => y.MapFrom(src =>
                     $"{src.FirstName} {src.LastName}"
                 )).ForMember(x => x.Position, y => y.MapFrom(src =>
-                   src.Position.GetEnumDescription()));
-                
+                   src.Position.GetEnumDescription()));         
         }
     }
 }

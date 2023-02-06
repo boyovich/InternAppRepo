@@ -22,9 +22,9 @@ namespace InternApp.API.Controllers
         }
 
         [HttpGet("getAllUsers")]
-        public ActionResult<IEnumerable<UserDTO>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
         {
-            var users = _userService.GetAllUsers();           
+            var users = await _userService.GetAllUsers();           
             return Ok(_mapper.Map<List<UserDTO>>(users));
         }
 

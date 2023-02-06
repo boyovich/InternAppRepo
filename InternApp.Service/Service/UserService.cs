@@ -1,5 +1,6 @@
 ﻿using InternApp.Domain.Entities;
 using InternApp.Domain.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternApp.Service.Service
 {
@@ -30,9 +31,9 @@ namespace InternApp.Service.Service
             _context.SaveChanges();
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return _context.Users.OrderBy(c => c.Company.Name).ToList();
+            return await _context.Users.OrderBy(c => c.Company.Name).ToListAsync();
         }
 
         public IEnumerable<User> GetAllUsersByCompanyId(Guid companyId)

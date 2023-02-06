@@ -16,16 +16,13 @@ namespace InternApp.Service.Utils
                 var descriptionAttribute = e.GetType().GetMember(e.ToString())[0];
                 var attr = descriptionAttribute.GetCustomAttributes(typeof(DescriptionAttribute), inherit: false)[0]
                    as DescriptionAttribute;
-
                 return attr == null ? e.ToString() : attr.Description;
             }
             catch(IndexOutOfRangeException exc)
             {
                 Console.WriteLine(exc.Message);
-            }
-           
+            }          
             return e.ToString();
         }
-
     }
 }
