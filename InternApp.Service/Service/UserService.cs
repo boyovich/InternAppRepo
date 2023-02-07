@@ -31,14 +31,20 @@ namespace InternApp.Service.Service
             _context.SaveChanges();
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers(int pageNumber, int pageSize)
         {
-            return await _context.Users.OrderBy(c => c.Company.Name).ToListAsync();
+            return await _context.Users.OrderBy(u => u.Id).
+                Skip((pageNumber-1)*pageSize).
+                Take(pageSize).
+                ToListAsync();
         }
 
-        public IEnumerable<User> GetAllUsersByCompanyId(Guid companyId)
+        public async Task<IEnumerable<User>> GetAllUsersByCompanyId(Guid companyId, int pageNumber, int pageSize)
         {
-            return _context.Users.Where(u => u.CompanyId == companyId).ToList();
+            return await _context.Users.Where(u => u.CompanyId == companyId).OrderBy(u => u.Id).
+                Skip((pageNumber - 1) * pageSize).
+                Take(pageSize).
+                ToListAsync();
         }
 
         public User UpdateUser(Guid id, User user)

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using InternApp.Domain.DTOs;
+using InternApp.Domain.Entities;
 using InternApp.Service.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -21,17 +22,17 @@ namespace InternApp.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("getAllUsers")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
+        [HttpPut("getAllUsers")]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers([FromBody] PaginationRequest paginationRequest)
         {
-            var users = await _userService.GetAllUsers();           
+            var users = await _userService.GetAllUsers(paginationRequest.pageNumber, paginationRequest.pageSize);           
             return Ok(_mapper.Map<List<UserDTO>>(users));
         }
 
-        [HttpGet("getUsersByCompany/{companyId}")]
-        public ActionResult<IEnumerable<UserDTO>> GetAllUsersByCompanyId(Guid companyId)
+        [HttpPut("getUsersByCompany/{companyId}")]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsersByCompanyId(Guid companyId, [FromBody] PaginationRequest paginationRequest)
         {
-            var users = _userService.GetAllUsersByCompanyId(companyId);
+            var users = await _userService.GetAllUsersByCompanyId(companyId, paginationRequest.pageNumber, paginationRequest.pageSize);          
             return Ok(_mapper.Map<List<UserDTO>>(users));
         }
 

@@ -19,10 +19,10 @@ namespace InternApp.API.Controllers
             _mapper = mapper;
         }
        
-        [HttpGet]
-        public ActionResult<IEnumerable<CompanyDTO>> GetAllCompanies()
+        [HttpPut]
+        public ActionResult<IEnumerable<CompanyDTO>> GetAllCompanies([FromBody] PaginationRequest request)
         {
-            var companies = _companyService.GetAllCompanies();
+            var companies = _companyService.GetAllCompanies(request.pageNumber, request.pageSize);
             return Ok(_mapper.Map<IEnumerable<CompanyDTO>>(companies));
         }
 

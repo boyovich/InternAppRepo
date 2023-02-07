@@ -12,9 +12,12 @@ namespace InternApp.Service.Service
             _context = context;
         }
 
-        public IEnumerable<Company> GetAllCompanies()
+        public IEnumerable<Company> GetAllCompanies(int pageNumber, int pageSize)
         {
-            return _context.Companies.OrderBy(c => c.Name).ToList();
+            return _context.Companies.OrderBy(c => c.Name).
+                Skip((pageNumber-1)*pageSize).
+                Take(pageSize).
+                ToList();
         }
 
         public Company CreateCompany(Company company)
