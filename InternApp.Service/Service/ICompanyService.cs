@@ -5,7 +5,9 @@ namespace InternApp.Service.Service
 {
     public interface ICompanyService
     {
-        public IEnumerable<Company> GetAllCompanies(int pageNumber, int pageSize);
+        public PaginationResponse<Company> GetCompanies(PaginationRequest request);
+        public PaginationResponse<Company> GetAllCompanies();
+
         public Company CreateCompany(Company company);
         public Company UpdateCompany(Guid id, UpdateCompanyDTO companyDTO);
         public void DeleteCompany(Guid id); 

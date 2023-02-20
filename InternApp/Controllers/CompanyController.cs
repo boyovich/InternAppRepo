@@ -18,12 +18,18 @@ namespace InternApp.API.Controllers
             _companyService = companyService ?? throw new ArgumentNullException(nameof(companyService));
             _mapper = mapper;
         }
-       
-        [HttpPut]
-        public ActionResult<IEnumerable<CompanyDTO>> GetAllCompanies([FromBody] PaginationRequest request)
+
+        [HttpGet]
+        public ActionResult<PaginationResponse<CompanyDTO>> GetAllCompanies()
         {
-            var companies = _companyService.GetAllCompanies(request.pageNumber, request.pageSize);
-            return Ok(_mapper.Map<IEnumerable<CompanyDTO>>(companies));
+            var companies = _companyService.GetAllCompanies();
+            return Ok(new PaginationResponse<CompanyDTO> { ResponseList = _mapper.Map<List<CompanyDTO>>(companies.ResponseList), Count = companies.Count });
+        }
+        [HttpPut]
+        public ActionResult<PaginationResponse<CompanyDTO>> GetCompanies([FromBody] PaginationRequest request)
+        {
+            var companies = _companyService.GetCompanies(request);
+            return Ok(new PaginationResponse<CompanyDTO> {ResponseList = _mapper.Map<List<CompanyDTO>>(companies.ResponseList), Count =  companies.Count});
         }
 
         [HttpPost("createCompany")]

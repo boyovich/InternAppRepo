@@ -1,6 +1,7 @@
 ﻿using InternApp.Domain.DTOs;
 using InternApp.Domain.Entities;
 using InternApp.Domain.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternApp.Service.Service
 {
@@ -11,13 +12,20 @@ namespace InternApp.Service.Service
         {
             _context = context;
         }
-
-        public IEnumerable<Company> GetAllCompanies(int pageNumber, int pageSize)
+        public PaginationResponse<Company> GetAllCompanies()
         {
-            return _context.Companies.OrderBy(c => c.Name).
-                Skip((pageNumber-1)*pageSize).
-                Take(pageSize).
+            return new PaginationResponse<Company> { ResponseList = _context.Companies.OrderBy(c => c.Id).ToList(), Count = _context.Companies.Count() };
+        }
+
+        public PaginationResponse<Company> GetCompanies(PaginationRequest request)
+        {
+            PaginationResponse<Company> response = new PaginationResponse<Company>();
+            response.ResponseList = _context.Companies.OrderBy(c => c.Id).
+                Skip(Math.Max((request.PageNumber - 1) * request.PageSize,0)).
+                Take(request.PageSize).
                 ToList();
+            response.Count = _context.Companies.Count();
+            return response;
         }
 
         public Company CreateCompany(Company company)

@@ -1,4 +1,5 @@
-﻿using InternApp.Domain.Entities;
+﻿using Azure.Core;
+using InternApp.Domain.Entities;
 using InternApp.Domain.Persistance;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,20 +32,26 @@ namespace InternApp.Service.Service
             _context.SaveChanges();
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers(int pageNumber, int pageSize)
+        public async Task<PaginationResponse<User>> GetUsers(PaginationRequest request)
         {
-            return await _context.Users.OrderBy(u => u.Id).
-                Skip((pageNumber-1)*pageSize).
-                Take(pageSize).
+            PaginationResponse<User> response = new PaginationResponse<User>();
+            response.ResponseList = await _context.Users.OrderBy(u => u.Id).
+                Skip(Math.Max((request.PageNumber - 1) * request.PageSize, 0)).
+                Take(request.PageSize).
                 ToListAsync();
+            response.Count = _context.Users.Count();
+            return response;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersByCompanyId(Guid companyId, int pageNumber, int pageSize)
+        public async Task<PaginationResponse<User>> GetAllUsersByCompanyId(Guid companyId)
         {
-            return await _context.Users.Where(u => u.CompanyId == companyId).OrderBy(u => u.Id).
-                Skip((pageNumber - 1) * pageSize).
-                Take(pageSize).
+            PaginationResponse<User> response = new PaginationResponse<User>();
+            response.ResponseList = await _context.Users.
+                OrderBy(u => u.Id).
+                Where(u => u.CompanyId == companyId).
                 ToListAsync();
+            response.Count = _context.Users.Count(u => u.CompanyId == companyId);
+            return response;
         }
 
         public User UpdateUser(Guid id, User user)

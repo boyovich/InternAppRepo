@@ -22,18 +22,18 @@ namespace InternApp.API.Controllers
             _logger = logger;
         }
 
-        [HttpPut("getAllUsers")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers([FromBody] PaginationRequest paginationRequest)
+        [HttpPut("getUsers")]
+        public async Task<ActionResult<PaginationResponse<UserDTO>>> GetUsers([FromBody] PaginationRequest paginationRequest)
         {
-            var users = await _userService.GetAllUsers(paginationRequest.pageNumber, paginationRequest.pageSize);           
-            return Ok(_mapper.Map<List<UserDTO>>(users));
+            var users = await _userService.GetUsers(paginationRequest);           
+            return Ok(new PaginationResponse<UserDTO>() { ResponseList = _mapper.Map<List<UserDTO>>(users.ResponseList), Count = users.Count });
         }
 
         [HttpPut("getUsersByCompany/{companyId}")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsersByCompanyId(Guid companyId, [FromBody] PaginationRequest paginationRequest)
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsersByCompanyId(Guid companyId)
         {
-            var users = await _userService.GetAllUsersByCompanyId(companyId, paginationRequest.pageNumber, paginationRequest.pageSize);          
-            return Ok(_mapper.Map<List<UserDTO>>(users));
+            var users = await _userService.GetAllUsersByCompanyId(companyId);
+            return Ok(new PaginationResponse<UserDTO>() { ResponseList = _mapper.Map<List<UserDTO>>(users.ResponseList), Count = users.Count });
         }
 
         [HttpPost]
