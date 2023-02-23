@@ -19,8 +19,38 @@ namespace InternApp.Service.Service
 
         public PaginationResponse<Company> GetCompanies(PaginationRequest request)
         {
+            IQueryable<Company> companies = _context.Companies.AsQueryable();
+            switch (request.SortBy)
+            {
+                case "Nameascend":
+                    companies = companies.OrderBy(c => c.Name);
+                    break;
+                case "Cityascend":
+                    companies = companies.OrderBy(c => c.City);
+                    break;
+                case "Countryascend":
+                    companies = companies.OrderBy(c => c.Country);
+                    break;
+                case "NumberofUsersascend":
+                    companies = companies.OrderBy(c => c.Users.Count());
+                    break;
+                case "Namedescend":
+                    companies = companies.OrderByDescending(c => c.Name);
+                    break;
+                case "Citydescend":
+                    companies = companies.OrderByDescending(c => c.City);
+                    break;
+                case "Countrydescend":
+                    companies = companies.OrderByDescending(c => c.Country);
+                    break;
+                case "NumberofUsersdescend":
+                    companies = companies.OrderByDescending(c => c.Users.Count());
+                    break;
+                default:
+                    break;
+            }
             PaginationResponse<Company> response = new PaginationResponse<Company>();
-            response.ResponseList = _context.Companies.OrderBy(c => c.Id).
+            response.ResponseList = companies.
                 Skip(Math.Max((request.PageNumber - 1) * request.PageSize,0)).
                 Take(request.PageSize).
                 ToList();

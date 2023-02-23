@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using InternApp.Domain.Entities;
 using InternApp.Domain.Persistance;
+using InternApp.Service.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace InternApp.Service.Service
@@ -34,8 +35,35 @@ namespace InternApp.Service.Service
 
         public async Task<PaginationResponse<User>> GetUsers(PaginationRequest request)
         {
+            IQueryable<User> users = _context.Users.AsQueryable();
+            switch (request.SortBy)
+            {
+                case "Id":
+                    users = _context.Users.OrderBy(x => x.Id);
+                    break;
+                case "CompanyIdascend":
+                    users = _context.Users.OrderBy(x => x.Company.Name);
+                    break;
+                case "CompanyIddescend":
+                    users = _context.Users.OrderByDescending(x => x.Company.Name);
+                    break;
+                case "Positionascend":
+                    users = _context.Users.OrderBy(x => x.Position);
+                    break;
+                case "Positiondescend":
+                    users = _context.Users.OrderByDescending(x => x.Position);
+                    break;
+                case "FirstNameascend":
+                    users = _context.Users.OrderBy(x => x.FirstName);
+                    break;
+                case "FirstNamedescend":
+                    users = _context.Users.OrderByDescending(x => x.FirstName);
+                    break;
+                default:
+                    break;
+            }
             PaginationResponse<User> response = new PaginationResponse<User>();
-            response.ResponseList = await _context.Users.OrderBy(u => u.Id).
+            response.ResponseList = await users.
                 Skip(Math.Max((request.PageNumber - 1) * request.PageSize, 0)).
                 Take(request.PageSize).
                 ToListAsync();
