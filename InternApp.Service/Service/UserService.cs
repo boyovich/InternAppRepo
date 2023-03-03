@@ -35,35 +35,35 @@ namespace InternApp.Service.Service
 
         public async Task<PaginationResponse<User>> GetUsers(PaginationRequest request)
         {
-            IQueryable<User> users = _context.Users.AsQueryable();
+            IQueryable<User> usersQuery = _context.Users.AsQueryable();
             switch (request.SortBy)
             {
                 case "Id":
-                    users = _context.Users.OrderBy(x => x.Id);
+                    usersQuery = usersQuery.OrderBy(x => x.Id);
                     break;
                 case "CompanyIdascend":
-                    users = _context.Users.OrderBy(x => x.Company.Name);
+                    usersQuery = usersQuery.OrderBy(x => x.Company.Name);
                     break;
                 case "CompanyIddescend":
-                    users = _context.Users.OrderByDescending(x => x.Company.Name);
+                    usersQuery = usersQuery.OrderByDescending(x => x.Company.Name);
                     break;
                 case "Positionascend":
-                    users = _context.Users.OrderBy(x => x.Position);
+                    usersQuery = usersQuery.OrderBy(x => x.Position);
                     break;
                 case "Positiondescend":
-                    users = _context.Users.OrderByDescending(x => x.Position);
+                    usersQuery = usersQuery.OrderByDescending(x => x.Position);
                     break;
                 case "FirstNameascend":
-                    users = _context.Users.OrderBy(x => x.FirstName);
+                    usersQuery = usersQuery.OrderBy(x => x.FirstName);
                     break;
                 case "FirstNamedescend":
-                    users = _context.Users.OrderByDescending(x => x.FirstName);
+                    usersQuery = usersQuery.OrderByDescending(x => x.FirstName);
                     break;
                 default:
                     break;
             }
             PaginationResponse<User> response = new PaginationResponse<User>();
-            response.ResponseList = await users.
+            response.ResponseList = await usersQuery.
                 Skip(Math.Max((request.PageNumber - 1) * request.PageSize, 0)).
                 Take(request.PageSize).
                 ToListAsync();
