@@ -1,5 +1,7 @@
-﻿using InternApp.Domain.Entities;
+﻿using Azure.Core;
+using InternApp.Domain.Entities;
 using InternApp.Domain.Persistance;
+using InternApp.Service.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace InternApp.Service.Service
@@ -31,14 +33,53 @@ namespace InternApp.Service.Service
             _context.SaveChanges();
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<PaginationResponse<User>> GetUsers(PaginationRequest request)
         {
-            return await _context.Users.OrderBy(c => c.Company.Name).ToListAsync();
+            IQueryable<User> usersQuery = _context.Users.AsQueryable();
+            switch (request.SortBy)
+            {
+                case "Id":
+                    usersQuery = usersQuery.OrderBy(x => x.Id);
+                    break;
+                case "CompanyIdascend":
+                    usersQuery = usersQuery.OrderBy(x => x.Company.Name);
+                    break;
+                case "CompanyIddescend":
+                    usersQuery = usersQuery.OrderByDescending(x => x.Company.Name);
+                    break;
+                case "Positionascend":
+                    usersQuery = usersQuery.OrderBy(x => x.Position);
+                    break;
+                case "Positiondescend":
+                    usersQuery = usersQuery.OrderByDescending(x => x.Position);
+                    break;
+                case "FirstNameascend":
+                    usersQuery = usersQuery.OrderBy(x => x.FirstName);
+                    break;
+                case "FirstNamedescend":
+                    usersQuery = usersQuery.OrderByDescending(x => x.FirstName);
+                    break;
+                default:
+                    break;
+            }
+            PaginationResponse<User> response = new PaginationResponse<User>();
+            response.ResponseList = await usersQuery.
+                Skip(Math.Max((request.PageNumber - 1) * request.PageSize, 0)).
+                Take(request.PageSize).
+                ToListAsync();
+            response.Count = _context.Users.Count();
+            return response;
         }
 
-        public IEnumerable<User> GetAllUsersByCompanyId(Guid companyId)
+        public async Task<PaginationResponse<User>> GetAllUsersByCompanyId(Guid companyId)
         {
-            return _context.Users.Where(u => u.CompanyId == companyId).ToList();
+            PaginationResponse<User> response = new PaginationResponse<User>();
+            response.ResponseList = await _context.Users.
+                OrderBy(u => u.Id).
+                Where(u => u.CompanyId == companyId).
+                ToListAsync();
+            response.Count = _context.Users.Count(u => u.CompanyId == companyId);
+            return response;
         }
 
         public User UpdateUser(Guid id, User user)

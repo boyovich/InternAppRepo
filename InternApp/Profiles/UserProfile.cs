@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InternApp.Domain;
 using InternApp.Domain.DTOs;
 using InternApp.Domain.Entities;
 using InternApp.Service.Service;
@@ -22,8 +23,8 @@ namespace InternApp.API.Profiles
             CreateMap<Domain.Entities.User, UserDTO>()
                 .ForMember(x => x.FullName, y => y.MapFrom(src =>
                     $"{src.FirstName} {src.LastName}"
-                )).ForMember(x => x.Position, y => y.MapFrom(src =>
-                   src.Position.GetEnumDescription()));         
+                )).ForMember(x => x.Position, y => y.MapFrom(src => src.Position.GetEnumDescription()));         
         }
     }
+
 }
